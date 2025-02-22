@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Azúcar</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h2 class="mt-5">Consulta de Azúcar</h2>
+
+        <form action="/consulta" method="post">
+            <div class="form-group">
+                <label for="muestra">Seleccione la Muestra:</label>
+                <select class="form-control" name="muestra">
+                    <option value="Azucar 1100">Azucar 1100</option>
+                    <option value="Linea C 50Kg">Linea C 50Kg</option>
+                    <option value="Linea A 50Kg">Linea A 50Kg</option>
+                    <option value="Azucar 1kg">Azucar 1kg</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="fecha">Fecha (DD-MM-YYYY):</label>
+                <input type="text" class="form-control" name="fecha" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Cargar Datos</button>
+        </form>
+
+        <h3 class="mt-5">Resultados para {{ muestra }} en {{ fecha }}</h3>
+        
+        <a href="/generar_pdf_total_azucar?muestra={{ muestra }}&fecha={{ fecha }}" class="btn btn-secondary mt-3">Generar PDF Total Azúcar en KG</a>
+        <a href="/generar_pdf_azucar_1100?muestra={{ muestra }}&fecha={{ fecha }}" class="btn btn-secondary mt-3">Generar PDF Azúcar 1100</a>
+
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Turno</th>
+                    <th>A1</th>
+                    <th>A2</th>
+                    <th>A3</th>
+                    <th>Obs</th>
+                    <th>Crudo</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in records %}
+                <tr>
+                    <td>{{ row['fecha'] }}</td>
+                    <td>{{ row['hora'] }}</td>
+                    <td>{{ 'Turno 1' if '07:00' <= row['hora'] < '14:00' else 'Turno 2' if '15:00' <= row['hora'] < '22:00' else 'Turno 3' }}</td>
+                    <td>{{ row['A1'] }}</td>
+                    <td>{{ row['A2'] }}</td>
+                    <td>{{ row['A3'] }}</td>
+                    <td>{{ row['Obs'] }}</td>
+                    <td>{{ row['Crudo'] }}</td>
+                    <td>{{ row['total'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="/logout" class="btn btn-danger">Cerrar Sesión</a>
+    </div>
+</body>
+</html>
