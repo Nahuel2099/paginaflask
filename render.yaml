@@ -5,7 +5,7 @@ services:
     env: python
     plan: free
     buildCommand: pip install -r requirements.txt
-    startCommand: python E:\NOTEBOOK\codigos a ordenar\dist\azucar_flask.py
+    startCommand: python E:\NOTEBOOK\codigos a ordenar\dist\flask_azucar.py
     envVars:
       - key: FLASK_ENV
         value: production
