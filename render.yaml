@@ -1,11 +1,11 @@
 version: 1
 services:
   - type: web
-    name: flask_azucar
+    name: azucar
     env: python
     plan: free
     buildCommand: pip install -r requirements.txt
-    startCommand: python app.py
+    startCommand: python E:\NOTEBOOK\codigos a ordenar\dist\azucar_flask.py
     envVars:
       - key: FLASK_ENV
         value: production
